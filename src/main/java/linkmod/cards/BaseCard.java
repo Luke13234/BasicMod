@@ -1,14 +1,14 @@
-package basicmod.cards;
+package linkmod.cards;
 
 import basemod.abstracts.CustomCard;
-import basicmod.BasicMod;
-import basicmod.util.CardInfo;
+import linkmod.BasicMod;
+import linkmod.util.CardInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-import static basicmod.BasicMod.makeID;
-import static basicmod.util.TextureLoader.getCardTextureString;
+import static linkmod.BasicMod.makeID;
+import static linkmod.util.TextureLoader.getCardTextureString;
 
 
 public abstract class BaseCard extends CustomCard {

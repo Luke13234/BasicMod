@@ -1,12 +1,12 @@
-package basicmod;
+package linkmod;
 
 import basemod.BaseMod;
 import basemod.interfaces.EditKeywordsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
-import basicmod.util.GeneralUtils;
-import basicmod.util.KeywordInfo;
-import basicmod.util.TextureLoader;
+import linkmod.util.GeneralUtils;
+import linkmod.util.KeywordInfo;
+import linkmod.util.TextureLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -36,7 +36,7 @@ public class BasicMod implements
     public static String modID;
     static { loadModInfo(); }
     public static final Logger logger = LogManager.getLogger(modID); //Used to output to the console.
-    private static final String resourcesFolder = "basicmod";
+    private static final String resourcesFolder = "linkmod";
 
     //This is used to prefix the IDs of various objects like cards and relics,
     //to avoid conflicts between different mods using the same name for things.
