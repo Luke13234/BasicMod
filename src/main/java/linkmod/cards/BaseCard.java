@@ -1,13 +1,13 @@
 package linkmod.cards;
 
 import basemod.abstracts.CustomCard;
-import linkmod.BasicMod;
+import linkmod.LinkMod;
 import linkmod.util.CardInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-import static linkmod.BasicMod.makeID;
+import static linkmod.LinkMod.makeID;
 import static linkmod.util.TextureLoader.getCardTextureString;
 
 
@@ -220,7 +220,7 @@ public abstract class BaseCard extends CustomCard {
             {
                 if (cardStrings.UPGRADE_DESCRIPTION == null)
                 {
-                    BasicMod.logger.error("Card " + cardID + " upgrades description and has null upgrade description.");
+                    LinkMod.logger.error("Card " + cardID + " upgrades description and has null upgrade description.");
                 }
                 else
                 {

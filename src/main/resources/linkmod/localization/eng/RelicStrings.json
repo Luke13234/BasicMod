@@ -5,5 +5,19 @@
     "DESCRIPTIONS": [
       "Gain [E] at the start of your turn. [E] is an energy icon."
     ]
+  },
+  "${modID}:Master_Sword": {
+    "NAME": "The Master Sword",
+    "FLAVOR": "It hums with power.",
+    "DESCRIPTIONS": [
+      "Whenever you play a card, gain #b%d #yStrength."
+    ]
+  },
+  "${modID}:Heart_Of_A_Champion": {
+    "NAME": "Champion's Heart",
+    "FLAVOR": "The Courage to carry on.",
+    "DESCRIPTIONS": [
+      "Does nothing for now."
+    ]
   }
 }

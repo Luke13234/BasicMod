@@ -6,7 +6,7 @@ import linkmod.util.TextureLoader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 
-import static linkmod.BasicMod.relicPath;
+import static linkmod.LinkMod.relicPath;
 
 public abstract class BaseRelic extends CustomRelic {
     public AbstractCard.CardColor pool = null;

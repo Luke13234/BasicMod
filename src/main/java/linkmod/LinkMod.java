@@ -1,9 +1,13 @@
 package linkmod;
 
+import basemod.AutoAdd;
 import basemod.BaseMod;
-import basemod.interfaces.EditKeywordsSubscriber;
-import basemod.interfaces.EditStringsSubscriber;
-import basemod.interfaces.PostInitializeSubscriber;
+import basemod.interfaces.*;
+import com.badlogic.gdx.graphics.Color;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import linkmod.cards.BaseCard;
+import linkmod.character.LinkCharacter;
+import linkmod.relics.BaseRelic;
 import linkmod.util.GeneralUtils;
 import linkmod.util.KeywordInfo;
 import linkmod.util.TextureLoader;
@@ -28,7 +32,10 @@ import java.util.Optional;
 import java.util.Set;
 
 @SpireInitializer
-public class BasicMod implements
+public class LinkMod implements
+        EditCardsSubscriber,
+        EditRelicsSubscriber,
+        EditCharactersSubscriber,
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         PostInitializeSubscriber {
@@ -43,13 +50,35 @@ public class BasicMod implements
     public static String makeID(String id) {
         return modID + ":" + id;
     }
+    private static final String CHAR_SELECT_BUTTON = characterPath("select/button.png");
+    private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
+    private static final String BG_ATTACK = characterPath("cardback/bg_attack.png");
+    private static final String BG_ATTACK_P = characterPath("cardback/bg_attack_p.png");
+    private static final String BG_SKILL = characterPath("cardback/bg_skill.png");
+    private static final String BG_SKILL_P = characterPath("cardback/bg_skill_p.png");
+    private static final String BG_POWER = characterPath("cardback/bg_power.png");
+    private static final String BG_POWER_P = characterPath("cardback/bg_power_p.png");
+    private static final String ENERGY_ORB = characterPath("cardback/energy_orb.png");
+    private static final String ENERGY_ORB_P = characterPath("cardback/energy_orb_p.png");
+    private static final String SMALL_ORB = characterPath("cardback/small_orb.png");
+//This applies colors to the cards
+    private static final Color cardColor = new Color(56f/255f, 182f/255f, 241f/255f, 1f);
 
     //This will be called by ModTheSpire because of the @SpireInitializer annotation at the top of the class.
     public static void initialize() {
-        new BasicMod();
+        new LinkMod();
+
+        BaseMod.addColor(LinkCharacter.Enums.CARD_COLOR, cardColor,
+                BG_ATTACK, BG_SKILL, BG_POWER, ENERGY_ORB,
+                BG_ATTACK_P, BG_SKILL_P, BG_POWER_P, ENERGY_ORB_P,
+                SMALL_ORB);
+
+
+
+
     }
 
-    public BasicMod() {
+    public LinkMod() {
         BaseMod.subscribe(this); //This will make BaseMod trigger all the subscribers at their appropriate times.
         logger.info(modID + " subscribed to BaseMod.");
     }
@@ -168,7 +197,7 @@ public class BasicMod implements
             if (annotationDB == null)
                 return false;
             Set<String> initializers = annotationDB.getAnnotationIndex().getOrDefault(SpireInitializer.class.getName(), Collections.emptySet());
-            return initializers.contains(BasicMod.class.getName());
+            return initializers.contains(LinkMod.class.getName());
         }).findFirst();
         if (infos.isPresent()) {
             info = infos.get();
@@ -177,5 +206,36 @@ public class BasicMod implements
         else {
             throw new RuntimeException("Failed to determine mod info/ID based on initializer.");
         }
+    }
+
+    @Override
+    public void receiveEditCharacters() {
+            BaseMod.addCharacter(new LinkCharacter(),
+                    CHAR_SELECT_BUTTON, CHAR_SELECT_PORTRAIT, LinkCharacter.Enums.LINK_CHAMPION);
+    }
+
+    @Override
+    public void receiveEditCards() {
+        new AutoAdd(modID) //Loads files from this mod
+                .packageFilter(BaseCard.class) //In the same package as this class
+                .setDefaultSeen(true) //And marks them as seen in the compendium
+                .cards(); //Adds the cards
+    }
+
+    @Override
+    public void receiveEditRelics() {
+        new AutoAdd(modID) //Loads files from this mod
+                .packageFilter(BaseRelic.class) //In the same package as this class
+                .any(BaseRelic.class, (info, relic) -> { //Run this code for any classes that extend this class
+                    if (relic.pool != null)
+                        BaseMod.addRelicToCustomPool(relic, relic.pool); //Register a custom character specific relic
+                    else
+                        BaseMod.addRelic(relic, relic.relicType); //Register a shared or base game character specific relic
+
+                    //If the class is annotated with @AutoAdd.Seen, it will be marked as seen, making it visible in the relic library.
+                    //If you want all your relics to be visible by default, just remove this if statement.
+                    if (info.seen)
+                        UnlockTracker.markRelicAsSeen(relic.relicId);
+                });
     }
 }
