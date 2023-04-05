@@ -20,6 +20,6 @@
   },
   "${modID}:Flurry_Rush": {
     "NAME": "Flurry Rush",
-    "DESCRIPTION": "Deal !D! damage."
+    "DESCRIPTION": "Deal !D! damage 5 times."
   }
 }
