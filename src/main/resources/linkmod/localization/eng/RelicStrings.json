@@ -13,8 +13,8 @@
       "Whenever you play a card, gain #b%d #yStrength."
     ]
   },
-  "${modID}:Heart_Of_A_Champion": {
-    "NAME": "Champion's Heart",
+  "${modID}:Spirit_Orb": {
+    "NAME": "Spirit Orb",
     "FLAVOR": "The Courage to carry on.",
     "DESCRIPTIONS": [
       "Does nothing for now."
